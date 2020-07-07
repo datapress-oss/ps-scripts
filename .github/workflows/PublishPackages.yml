@@ -25,4 +25,4 @@ jobs:
     # Runs a command using the runners shell
     - name: Run a powershell version check
       run: Write-Host "Hello from PowerShell $($PSVersionTable.PSVersion)"
-      shell: powershell
+      shell: pwsh
