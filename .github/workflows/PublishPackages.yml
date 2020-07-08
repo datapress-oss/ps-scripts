@@ -23,10 +23,25 @@ jobs:
     - uses: actions/checkout@v2
 
     # Runs a command using the runners shell
-    - name: Publish every package in the repository
+    - name: Publish every package in the repository into powershell gallery
       run: |
-        cd Datapress.Publish-AllModules\
-        Import-Module .\Datapress.Publish-AllModules.psd1
-        cd ..
+        Import-Module .\Datapress.Publish-AllModules\Datapress.Publish-AllModules.psd1
         Publish-AllModules -apiKey ${{ secrets.PS_GALLERY }} -repository PSGallery
       shell: pwsh
+
+    - name: Publish every package in the repository into github packages
+      run: |
+        Import-Module .\Datapress.Export-Nuspec\Datapress.Export-Nuspec.psd1
+        $paths = Get-ChildItem -Directory
+        foreach ($path in $paths.Name) {
+          if (Test-Path $path/*.psd1) {
+            try {
+              Export-Nuspec -ManifestPath $(Resolve-Path *.psd1) -GitRepositoryUrl https://github.com/datapress-oss/ps-scripts.git
+              nuget help
+            }
+            catch {
+              Write-Host "Error"
+            }
+          }
+        }
+    shell: pwsh
