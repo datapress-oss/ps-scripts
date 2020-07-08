@@ -28,5 +28,5 @@ jobs:
         cd Publish-AllModules\
         Import-Module .\Publish-AllModules.psd1
         cd ..
-        Publish-AllModules -apiKey ${{ secrets.NUGET_KEY }} -repository PSGallery
+        Publish-AllModules -apiKey ${{ secrets.PS_GALLERY }} -repository PSGallery
       shell: pwsh
