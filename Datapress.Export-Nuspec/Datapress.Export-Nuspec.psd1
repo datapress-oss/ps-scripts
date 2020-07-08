@@ -12,7 +12,7 @@
 RootModule = 'Datapress.Export-Nuspec.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.0.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'Data-Press Kft.'
 Copyright = ''
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'Creates and exports a .nuspec file from a .psd1 manifest file'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''

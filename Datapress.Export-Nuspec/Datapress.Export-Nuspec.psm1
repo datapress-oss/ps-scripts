@@ -491,6 +491,10 @@ function New-NuSpecFile
             $dependencies
         </dependencies>
     </metadata>
+    <files>
+        <file src="*.psd1" target="" />
+        <file src="*.psm1" target="" />
+    </files>
 </package>
 "@
 

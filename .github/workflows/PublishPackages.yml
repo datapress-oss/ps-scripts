@@ -37,15 +37,18 @@ jobs:
     - name: Publish every package in the repository into github packages
       run: |
         Import-Module .\Datapress.Export-Nuspec\Datapress.Export-Nuspec.psd1
+        Get-Command Export-Nuspec
         $paths = Get-ChildItem -Directory
+        nuget source Add -Name "githubSrc" -Source "https://nuget.pkg.github.com/anymus0/index.json" -UserName "anymus0" -Password ${{ secrets.GITHUB_TOKEN }}
         foreach ($path in $paths.Name) {
-          if (Test-Path $path/*.psd1) {
+          if (Test-Path $path\*.psd1) {
             try {
-              Export-Nuspec -ManifestPath $(Resolve-Path *.psd1) -GitRepositoryUrl https://github.com/datapress-oss/ps-scripts.git
-              nuget help
+              Export-Nuspec -ManifestPath $(Resolve-Path $path\*.psd1) -GitRepositoryUrl https://github.com/datapress-oss/ps-scripts.git
+              nuget pack $(Resolve-Path $path\*.nuspec) -OutputDirectory $(Resolve-Path $path\)
+              nuget push $(Resolve-Path $path\*.nupkg) -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source "githubSrc" -SkipDuplicate
             }
             catch {
-              Write-Host "Error"
+              Write-Warning $Error[0]
             }
           }
         }
