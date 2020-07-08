@@ -15,7 +15,8 @@ function Publish-AllModules {
         Publish-Module -Path .\$path\ -NuGetApiKey $apiKey -Repository $repository
       }
       catch {
-        Write-Warning $Error[0]
+        Write-Host "Skipping duplicate"
+        Write-Host $Error[0]
       }
     }
   }
