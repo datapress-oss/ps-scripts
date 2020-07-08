@@ -12,8 +12,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "publish"
-  publish:
+  #1st job
+  publishToPWGallery:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
@@ -29,6 +29,11 @@ jobs:
         Publish-AllModules -apiKey ${{ secrets.PS_GALLERY }} -repository PSGallery
       shell: pwsh
 
+  #2nd job
+  publishToGithub:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Publish every package in the repository into github packages
       run: |
         Import-Module .\Datapress.Export-Nuspec\Datapress.Export-Nuspec.psd1
@@ -44,4 +49,4 @@ jobs:
             }
           }
         }
-    shell: pwsh
+      shell: pwsh
