@@ -12,13 +12,13 @@
 RootModule = 'Publish-AllModules.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.0.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
 
 # ID used to uniquely identify this module
-GUID = '394db5dc-b8c3-4a20-953e-69a4993c5071'
+GUID = '54a0a731-4d68-4da2-b55f-44fd4900f95d'
 
 # Author of this module
 Author = 'Balazs Nyirfa'
