@@ -39,7 +39,7 @@ jobs:
         Import-Module .\Datapress.Export-Nuspec\Datapress.Export-Nuspec.psd1
         Get-Command Export-Nuspec
         $paths = Get-ChildItem -Directory
-        nuget source Add -Name "githubSrc" -Source "https://nuget.pkg.github.com/anymus0/index.json" -UserName "anymus0" -Password ${{ secrets.GITHUB_TOKEN }}
+        nuget source Add -Name "githubSrc" -Source "https://nuget.pkg.github.com/datapress-oss/index.json" -UserName "datapress-oss" -Password ${{ secrets.GITHUB_TOKEN }}
         foreach ($path in $paths.Name) {
           if (Test-Path $path\*.psd1) {
             try {
