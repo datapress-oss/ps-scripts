@@ -1,4 +1,4 @@
-# Microsoft_Terminal_SchemeChanger
+# Set-ColorTheme function
 
 ### Kompatibilitás
 - OS: Windows 10

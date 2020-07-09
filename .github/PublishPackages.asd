@@ -26,7 +26,8 @@ jobs:
     - name: Publish every package in the repository into powershell gallery
       run: |
         Import-Module .\Datapress.Publish-AllModules\Datapress.Publish-AllModules.psd1
-        Publish-AllModules -apiKey ${{ secrets.PS_GALLERY }} -repository PSGallery
+        #powershell gallery is not used yet
+        #Publish-AllModules -apiKey ${{ secrets.PS_GALLERY }} -repository PSGallery
       shell: pwsh
 
   #2nd job
