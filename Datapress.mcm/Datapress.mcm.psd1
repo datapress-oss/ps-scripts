@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'mcm.psm1'
+RootModule = 'Datapress.mcm.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.0.1'
