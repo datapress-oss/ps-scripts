@@ -8,14 +8,13 @@ function Remove-EmptyDirectories {
     
     Finds empty directories and deletes them.
     If there is a directory with only hidden item/items in it, you'll be prompted to confirm the deletion!
-    Your current directory "pwd" has to be the parent directory of the directory/s you want to be deleted.
+    If -Path parameter is not provided, then your current directory "pwd" has to be the parent directory of the directory/s you want to be deleted.
     
     .PARAMETER Dryrun
     This parameter does not need a value. If provided, the deletion will be simulated with verbose output, but no actual changes will happen.
     
-    .INPUTS
-    
-    None. You cannot pipe objects to Add-Extension.
+    .PARAMETER Path
+    Provide the absolute path of the parent directory of the child directory/s that you want to be deleted.
     
     .EXAMPLE
     
@@ -24,10 +23,18 @@ function Remove-EmptyDirectories {
     
     .EXAMPLE
     
-    PS> Remove-EmptyDirectories -Dryrun
+    ParentDir> Remove-EmptyDirectories -Dryrun
     What if: Performing the operation "Remove Directory" on target "C:\Users\username\ParentDir\child1".
     What if: Performing the operation "Remove Directory" on target "C:\Users\username\ParentDir\child2".
     What if: Performing the operation "Remove Directory" on target "C:\Users\username\ParentDir\child3".
+    Dry-run operation has completed.
+
+    .EXAMPLE
+    
+    PS> Remove-EmptyDirectories -Path C:\Users\username\ParentDir
+    VERBOSE: Performing the operation "Remove Directory" on target "C:\Users\username\ParentDir\child1".
+    VERBOSE: Performing the operation "Remove Directory" on target "C:\Users\username\ParentDir\child2".
+    VERBOSE: Performing the operation "Remove Directory" on target "C:\Users\username\ParentDir\child3".
     Dry-run operation has completed.
     
     #>
