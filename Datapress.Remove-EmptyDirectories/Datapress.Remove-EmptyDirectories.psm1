@@ -58,7 +58,7 @@ function Remove-EmptyDirectories {
         foreach ($directory in $directoryList) {
             if ((Get-ChildItem $directory | Measure-Object).Count -eq 0) {
                 # if a directory contains no child item at all, that directory will be deleted
-                ($Dryrun) ? (Remove-Item $directory -Recurse -WhatIf) : (Remove-Item $directory -Recurse)
+                ($Dryrun) ? (Remove-Item $directory -Recurse -WhatIf) : (Remove-Item $directory -Recurse -Verbose)
             }
         }
     
