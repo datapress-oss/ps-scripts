@@ -87,14 +87,20 @@ Register-ArgumentCompleter -Native -CommandName @("routefinder") -ScriptBlock {
             Import-Csv -Path "$PSScriptRoot\s_station_202007201438.csv" -Delimiter ',' | ForEach-Object { $null = $stations.Add([Station]::new($_.Name, $_.Id)) }
             $script:IsLoaded = $true
         }
-        Set-Content -Path "C:\Users\Anymus\Downloads\log.txt" -Value $script:IsLoaded
         # finds the last command in the input line
         $ParamKey = Get-CommandName -AstString $commandAst.ToString()
         if ($ParamKey -match "De.*.Station") {
             # in case of Departure and Destination station parameters, register arguments from the "$stations" list
             # convert arguments to words without accents
             [string]$wordWithoutAccentsToComplete = Remove-Diacritics $wordToComplete
-            $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
+            if ($wordWithoutAccentsToComplete -match '_') {
+                # handle words with spaces
+                $wordWithoutAccentsToComplete = $wordWithoutAccentsToComplete -replace '_', ' '
+                $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "*$wordWithoutAccentsToComplete*"}
+            }
+            else {
+                $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
+            }
             $possibleValues | ForEach-Object {
                 [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'Text', $_.Name)
             }
