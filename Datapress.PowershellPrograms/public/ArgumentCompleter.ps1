@@ -76,7 +76,7 @@ function Get-CommandName {
 }
 $stations = [System.Collections.ArrayList]@()
 $ParameterHash = @{
-    routefinder = @("findroute", "setroute", "deleteroute")
+    routefinder = @("findroute")
     findroute = @("-DepartureStation", "-DestinationStation");
 }
 Register-ArgumentCompleter -Native -CommandName @("routefinder") -ScriptBlock {
@@ -104,14 +104,22 @@ Register-ArgumentCompleter -Native -CommandName @("routefinder") -ScriptBlock {
                 }
             }
             else {
-                $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
-                $possibleValues | ForEach-Object {
-                    [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'ParameterValue', $_.Name)
+                $IsEmacs = (Get-PSReadLineKeyHandler -Key Tab).Function -eq "Complete"
+                if (($wordWithoutAccentsToComplete.Length -lt 4) -and $IsEmacs) {
+                    # fix for the bug where if $wordToComplete has a Length less then 4 it removes every character except the first one
+                    # NOTE: this bug has to do something with the emacs Complete function as it only comes up in emacs mode
+                    $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
+                    $possibleValues | ForEach-Object {
+                        [System.Management.Automation.CompletionResult]::new($wordToComplete, $_.Name, 'ParameterValue', $_.Name)
+                    }
+                }
+                else {
+                    $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
+                    $possibleValues | ForEach-Object {
+                        [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'ParameterValue', $_.Name)
+                    }
                 }
             }
-            # $possibleValues | ForEach-Object {
-            #     [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'ParameterValue', $_.Name)
-            # }
         }
         else {
             # register arguments from the "$ParamKey" hashtable
