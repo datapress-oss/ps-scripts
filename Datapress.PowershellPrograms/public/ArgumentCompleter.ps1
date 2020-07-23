@@ -96,20 +96,28 @@ Register-ArgumentCompleter -Native -CommandName @("routefinder") -ScriptBlock {
             if ($wordWithoutAccentsToComplete -match '_') {
                 # handle words with spaces
                 $wordWithoutAccentsToComplete = $wordWithoutAccentsToComplete -replace '_', ' '
-                $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "*$wordWithoutAccentsToComplete*"}
+                $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
+                $possibleValues | ForEach-Object {
+                    $name = $_.Name
+                    $NameAsStringInputLine = "`"$name`""
+                    [System.Management.Automation.CompletionResult]::new($NameAsStringInputLine, $_.Name, 'ParameterValue', $_.Name)
+                }
             }
             else {
                 $possibleValues = $stations | Where-Object {$_.NameWithoutAccents -like "$wordWithoutAccentsToComplete*"}
+                $possibleValues | ForEach-Object {
+                    [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'ParameterValue', $_.Name)
+                }
             }
-            $possibleValues | ForEach-Object {
-                [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'Text', $_.Name)
-            }
+            # $possibleValues | ForEach-Object {
+            #     [System.Management.Automation.CompletionResult]::new($_.Name, $_.Name, 'ParameterValue', $_.Name)
+            # }
         }
         else {
             # register arguments from the "$ParamKey" hashtable
             $possibleValues = $ParameterHash.$ParamKey | Where-Object {$_ -like "$wordToComplete*"}
             $possibleValues | ForEach-Object {
-                [System.Management.Automation.CompletionResult]::new($_, $_, 'Text', $_)
+                [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
             }
         }
     }
