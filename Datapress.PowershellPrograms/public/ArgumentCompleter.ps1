@@ -132,6 +132,5 @@ Register-ArgumentCompleter -Native -CommandName @("routefinder") -ScriptBlock {
     catch {
         Set-Content -Path "$env:TMP\ArgumentCompleterErrorlog.txt" -Value $_
     }
-
 }
 #endregion

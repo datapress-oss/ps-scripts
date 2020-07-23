@@ -12,7 +12,7 @@
 RootModule = 'Datapress.PowershellPrograms.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.0.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -21,7 +21,7 @@ ModuleVersion = '0.0.1'
 GUID = '3742f180-18c7-4bdd-b3c0-2037368ab287'
 
 # Author of this module
-Author = 'Anymus'
+Author = 'Balazs Nyirfa'
 
 # Company or vendor of this module
 CompanyName = 'Data-Press Kft.'
