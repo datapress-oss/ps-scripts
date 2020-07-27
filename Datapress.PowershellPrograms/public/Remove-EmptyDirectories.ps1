@@ -39,18 +39,28 @@ function Remove-EmptyDirectories {
 
     #>
 
-        [CmdletBinding()]
-        param (
-            [Parameter(Mandatory = $false)]
-            [switch]
-            $Dryrun,
-            [Parameter(Mandatory = $false)]
-            [string]
-            $Path
-        )
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Dryrun,
+        [Parameter(Mandatory = $false)]
+        [string]
+        $Path,
+        [Parameter(ValueFromPipeline)]
+        $pipelinePath
+    )
 
+    Begin {
+        $position = $myinvocation.PipelinePosition
+        Write-Host "Pipeline position ${position}: Start"
+    }
+    Process {
         if ($Path) {
             $RootPath = $Path
+        }
+        elseif ($pipelinePath) {
+            $RootPath = $pipelinePath
         }
         else {
             $RootPath = Get-Location
@@ -74,7 +84,14 @@ function Remove-EmptyDirectories {
                 }
             }
         }
-
-        $completeMsg = ($Dryrun) ? "Dry-run operation has completed." : "Operation has completed."
+    }
+    End {
+        if ($Dryrun) {
+            $completeMsg = "Dry-run operation has completed."
+        }
+        else {
+            $completeMsg = "Operation has completed."
+        }
         Write-Host $completeMsg -ForegroundColor Green
+    }
 }
