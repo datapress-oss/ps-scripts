@@ -10,32 +10,28 @@ Ennek az előadásnak az előadásvázlatát tartalmazza ez a dokumentum.
 
 ## Általános áttekintő
 
-- Mire jó a parancssor? Kik azok akik szívesen használják?
 - Mi a PowerShell?
   - Ki fejleszti
-  - Kinek szánják, milyen feladatok elvégzésére használható eszköz
   - Milyen platformokon érhető el, mire épül
   - Mit vált le, minek a helyére ajálják
 
 ## Windows Terminal
 
 - Telepítés
-- UWP sandbox
-- Beállítások, dokumentáció, GitHub oldal
-- Testreszabás
-- Hogyan indítható a PowerShell
 - Gyorsbillenyűk, pane-k
-- Elevált módban való futtatás (sudo)
 
 ## PowerShell
 
 ### Általános áttekintés
 
 - Dotnet Core / Framework vs PowerShell Core (Verziók)
+- REPL funkciók (1+1, 1mb, $a, $b = $b, $a)
 - Profilok (Windows PowerShell vs PowerShell Core)
+- Help rendszer
 - PSReadLine (Argument-Completer, Tab), beállítások (EMACS, gyorsbillentyűk: ctrl+r, ctrl+u, ctrl+w)
-- Környezeti változók ($history, $host, $home, $islinux, $iswindows, $lastexitcode, $null, $psversiontable. \$psdefaultparametervalues)
+- Környezeti változók ($history, $islinux, $iswindows, $null, $psversiontable, $profile)
 - CmdLet (elnevezés Verb-Noun, Get-Verb, Get-Command), külső parancsok, aliasok
+- Beépített biztonsági mechanizmus (kód aláírás, ExecutionPolicy)
 
 ### PSProvider, PSDrive
 
@@ -48,9 +44,12 @@ Ennek az előadásnak az előadásvázlatát tartalmazza ez a dokumentum.
 
 - Mik azok a modulok
 - Hogyan / honnan telepíthetek (PSGalery, GitHub Packages)
-- Hasznos modulok bemutatása: posh-git, z, Datapress.PowerShellPrograms
+- Hasznos modulok bemutatása: posh-git
   - Profilba illesztés
   - starship / prompt
+- fájl kiterjesztések ps1, psd1, psm1
+- c# irt modulok: dotnet new psmodule
+
 
 ### Távoli elérés
 
@@ -58,9 +57,9 @@ Ennek az előadásnak az előadásvázlatát tartalmazza ez a dokumentum.
 
 ### Csövezés
 
-- Mik az objektumok (Metodus, Property)
+- Mik az objektumok (Metodus, Property, Get-Member)
 - Begin / Process / End
-- Pár egysoros példa avagy mitől Power a PowerShell
+- Pár egysoros példa avagy mitől Power a PowerShell: git, hány napja élek
 
 ```powershell
 $major, $minor, $patch = (git --version|sls \d+\.\d+\.\d+).Matches.Value -split '\.'
@@ -77,12 +76,12 @@ while ($true) { Write-Host -NoNewline "`r$((Get-Date).ToString('hh:mm:ss')) $((G
 ### Alapok
 
 - VS Code vs. ISE
-- Control Flow
-- Változó nevek ($'ez is egy érvényes változónév' = 1)
-- Operátorok (-join -replace -match -eq -nq -lt)
-- Tömbök, hashtable szintaxis
+- Control Flow (switch($a, $b), range 1..2)
+- Változó nevek ($'ez is egy érvényes változónév' = 1, 0x12 0b101010 '{0:X2}' -f 12) scope-ok
+- Operátorok (-join -replace -match -eq -nq -lt, -f stb case insensitive)
+- String interpolation
+- Tömbök (indexelés), hashtable szintaxis
 - PSCustomObject
-- Debug (Interactive Session)
 
 ### Datapress.PowerShellPrograms bemutatása
 
